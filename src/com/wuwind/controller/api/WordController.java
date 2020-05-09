@@ -1,4 +1,4 @@
-package com.wuwind.controller;
+package com.wuwind.controller.api;
 
 import com.wuwind.bean.Word;
 import com.wuwind.service.WordService;

@@ -12,7 +12,7 @@ public interface WordService {
 
     int update(Word word);
 
-    int select(Word word);
+    Word select(Object wordId);
 
     List<Word> getAll();
 }

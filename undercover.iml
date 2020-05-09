@@ -37,5 +37,6 @@
     <orderEntry type="library" name="jackson-core-2.9.6" level="project" />
     <orderEntry type="library" name="fastjson-1.1.31" level="project" />
     <orderEntry type="library" name="jackson-annotations-2.9.6" level="project" />
+    <orderEntry type="library" name="taglibs-standard-impl-1.2.5" level="project" />
   </component>
 </module>

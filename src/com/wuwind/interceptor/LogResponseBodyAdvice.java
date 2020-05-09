@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @ControllerAdvice
-@RestControllerAdvice("com.wuwind.controller")
+@RestControllerAdvice("com.wuwind.controller.api")
 public class LogResponseBodyAdvice implements ResponseBodyAdvice {
 
     @Override

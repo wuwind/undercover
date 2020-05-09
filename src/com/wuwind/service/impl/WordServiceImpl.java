@@ -30,8 +30,8 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
-    public int select(Word word) {
-        return 0;
+    public Word select(Object wordId) {
+        return wordDao.queryById(wordId);
     }
 
     @Override

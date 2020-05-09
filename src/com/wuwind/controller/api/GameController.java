@@ -1,4 +1,4 @@
-package com.wuwind.controller;
+package com.wuwind.controller.api;
 
 import com.wuwind.bean.Game;
 import com.wuwind.service.GameService;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -20,5 +21,12 @@ public class GameController {
     @ResponseBody
     public List<Game> getGames() {
         return gameService.getAll();
+    }
+
+    @RequestMapping("addGame")
+    @ResponseBody
+    public Game addGame(HttpServletRequest request, Game game) {
+        gameService.addGame(game);
+        return game;
     }
 }

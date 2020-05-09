@@ -20,6 +20,7 @@
           <element id="library" level="project" name="jackson-core-2.9.6" />
           <element id="library" level="project" name="fastjson-1.1.31" />
           <element id="library" level="project" name="jackson-annotations-2.9.6" />
+          <element id="library" level="project" name="taglibs-standard-impl-1.2.5" />
         </element>
       </element>
     </root>
