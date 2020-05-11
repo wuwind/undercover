@@ -29,4 +29,13 @@ public class GameController {
         gameService.addGame(game);
         return game;
     }
+
+    @RequestMapping("getLastWord")
+    @ResponseBody
+    public Game getLastWord(HttpServletRequest request) {
+        System.out.println("getLastWord");
+        List<Game> all = gameService.getAll();
+        Game game = all.get(all.size() - 1);
+        return game;
+    }
 }
