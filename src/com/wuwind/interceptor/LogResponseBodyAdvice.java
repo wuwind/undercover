@@ -20,6 +20,8 @@ public class LogResponseBodyAdvice implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        if(body instanceof Response)
+            return body;
         Response result = new Response();
         result.setCode(1);
         result.setData(body);

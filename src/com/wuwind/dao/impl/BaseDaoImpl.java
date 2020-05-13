@@ -228,6 +228,7 @@ public abstract class BaseDaoImpl<T> extends JdbcDaoSupport implements BaseDao<T
             sb.append("update ").append(tbNmae).append(" set ");
             Object id = null;
             for (Field declaredField : declaredFields) {
+                declaredField.setAccessible(true);
                 Object o = declaredField.get(data);
                 if (declaredField == idField) {
                     id = o;
