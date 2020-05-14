@@ -1,15 +1,24 @@
-package com.wuwind.bean;
+package com.wuwind.dao.bean;
 
 public class User {
     private Long id;
     private Long gameId;
     private String wxId;
     private String wxName;
+    private String wxPhoto;
     private String users;
     private String words;
     private String wordis;
     private Integer ready;
     private Integer uOut;
+
+    public String getWxPhoto() {
+        return wxPhoto;
+    }
+
+    public void setWxPhoto(String wxPhoto) {
+        this.wxPhoto = wxPhoto;
+    }
 
     public Integer getReady() {
         return ready;

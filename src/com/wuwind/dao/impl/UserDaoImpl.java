@@ -1,6 +1,6 @@
 package com.wuwind.dao.impl;
 
-import com.wuwind.bean.User;
+import com.wuwind.dao.bean.User;
 import com.wuwind.dao.UserDao;
 import org.springframework.stereotype.Repository;
 

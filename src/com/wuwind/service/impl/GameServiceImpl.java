@@ -1,6 +1,6 @@
 package com.wuwind.service.impl;
 
-import com.wuwind.bean.Game;
+import com.wuwind.dao.bean.Game;
 import com.wuwind.dao.GameDao;
 import com.wuwind.service.GameService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.wuwind.service;
 
-import com.wuwind.bean.User;
+import com.wuwind.dao.bean.User;
 
 import java.util.List;
 

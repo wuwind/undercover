@@ -1,7 +1,7 @@
 package com.wuwind.controller;
 
-import com.wuwind.bean.Game;
-import com.wuwind.bean.Word;
+import com.wuwind.dao.bean.Game;
+import com.wuwind.dao.bean.Word;
 import com.wuwind.service.GameService;
 import com.wuwind.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;

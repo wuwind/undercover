@@ -1,6 +1,6 @@
 package com.wuwind.service.impl;
 
-import com.wuwind.bean.User;
+import com.wuwind.dao.bean.User;
 import com.wuwind.dao.UserDao;
 import com.wuwind.service.UserService;
 import org.springframework.stereotype.Service;

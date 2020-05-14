@@ -1,6 +1,6 @@
 package com.wuwind.service;
 
-import com.wuwind.bean.Game;
+import com.wuwind.dao.bean.Game;
 
 import java.util.List;
 

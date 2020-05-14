@@ -1,4 +1,4 @@
-<%@ page import="com.wuwind.bean.Game" %>
+<%@ page import="com.wuwind.dao.bean.Game" %>
 <!DOCTYPE html>
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

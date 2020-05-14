@@ -1,8 +1,9 @@
 package com.wuwind.controller.api;
 
-import com.wuwind.bean.Game;
-import com.wuwind.bean.User;
-import com.wuwind.bean.Word;
+import com.wuwind.controller.bean.GameUser;
+import com.wuwind.dao.bean.Game;
+import com.wuwind.dao.bean.User;
+import com.wuwind.dao.bean.Word;
 import com.wuwind.response.Response;
 import com.wuwind.service.GameService;
 import com.wuwind.service.UserService;
@@ -37,12 +38,14 @@ public class UsersController {
 
     @RequestMapping("addUser")
     @ResponseBody
-    public synchronized Response addUser(HttpServletRequest request, User user) {
+    public synchronized Response addUser(HttpServletRequest request, GameUser gUser) {
         Response response = new Response();
-        if (user.getWxId() == null) {
+        if (gUser.getWxId() == null) {
             response.setMsg("wx id is null");
             return response;
         }
+        User user = new User();
+        user.setWxId(gUser.getWxId());
         List<User> all = userService.getAll();
         boolean isUpdate = false;
         for (User user1 : all) {
@@ -54,9 +57,7 @@ public class UsersController {
         }
         List<Game> games = gameService.getAll();
         Game lastGame = games.get(games.size()-1);
-        String users = user.getUsers();
-        String[] gUsers = users.split(",");
-        int count = gUsers.length;
+        int count = gUser.getNum();
         String lookSequence = lastGame.getLookSequence();
         if (null != lookSequence && lookSequence.length()+ count > lastGame.getSequence().length()) {
             response.setMsg("卡片被抢光啦!");
@@ -72,13 +73,14 @@ public class UsersController {
         for (int i = 0; i < count; i++) {
             indexs[i] = index;
             lookSequence += "1";
-            maps.put(gUsers[i], getWord(lastGame.getSequence(), index, word));
+            maps.put(gUser.getUsers().get(i), getWord(lastGame.getSequence(), index, word));
             index++;
         }
-        lastGame.setLookSequence(lookSequence);
-        gameService.updateGame(lastGame);
+//        lastGame.setLookSequence(lookSequence);
+//        gameService.updateGame(lastGame);
         StringBuilder wordIsBuild = new StringBuilder();
         StringBuilder wordsBuild = new StringBuilder();
+        StringBuilder usersBuild = new StringBuilder();
         for (int i : indexs) {
             wordIsBuild.append(i).append(",");
         }
@@ -87,9 +89,15 @@ public class UsersController {
             wordsBuild.append(value).append(",");
         }
         wordsBuild.deleteCharAt(wordsBuild.length()-1);
+        for (String value : gUser.getUsers()) {
+            usersBuild.append(value).append(",");
+        }
+        usersBuild.deleteCharAt(usersBuild.length()-1);
         user.setWordis(wordIsBuild.toString());
         user.setWords(wordsBuild.toString());
         user.setGameId(lastGame.getId());
+        user.setWxPhoto(gUser.getWxPhoto());
+        user.setUsers(usersBuild.toString());
         if (!isUpdate) {
             userService.addUser(user);
         } else {

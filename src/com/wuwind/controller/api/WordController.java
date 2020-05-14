@@ -1,6 +1,6 @@
 package com.wuwind.controller.api;
 
-import com.wuwind.bean.Word;
+import com.wuwind.dao.bean.Word;
 import com.wuwind.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

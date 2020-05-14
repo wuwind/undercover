@@ -1,6 +1,6 @@
 package com.wuwind.dao.impl;
 
-import com.wuwind.bean.Game;
+import com.wuwind.dao.bean.Game;
 import com.wuwind.dao.GameDao;
 import org.springframework.stereotype.Repository;
 

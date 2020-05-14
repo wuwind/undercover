@@ -1,6 +1,6 @@
 package com.wuwind.service.impl;
 
-import com.wuwind.bean.Word;
+import com.wuwind.dao.bean.Word;
 import com.wuwind.dao.WordDao;
 import com.wuwind.service.WordService;
 import org.springframework.stereotype.Service;

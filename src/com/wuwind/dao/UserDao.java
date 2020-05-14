@@ -1,7 +1,7 @@
 package com.wuwind.dao;
 
 
-import com.wuwind.bean.User;
+import com.wuwind.dao.bean.User;
 
 public interface UserDao extends BaseDao<User> {
 

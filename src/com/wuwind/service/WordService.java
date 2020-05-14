@@ -1,6 +1,6 @@
 package com.wuwind.service;
 
-import com.wuwind.bean.Word;
+import com.wuwind.dao.bean.Word;
 
 import java.util.List;
 
