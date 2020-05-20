@@ -8,7 +8,7 @@ public class User {
     private String wxPhoto;
     private String users;
     private String words;
-    private String wordis;
+    private String wordIS;
     private Integer ready;
     private Integer uOut;
 
@@ -84,12 +84,11 @@ public class User {
         this.words = words;
     }
 
-    public String getWordis() {
-        return wordis;
+    public String getWordIS() {
+        return wordIS;
     }
 
-    public void setWordis(String wordis) {
-        this.wordis = wordis;
+    public void setWordIS(String wordIS) {
+        this.wordIS = wordIS;
     }
-
 }

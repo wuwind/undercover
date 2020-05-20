@@ -93,7 +93,7 @@ public class UsersController {
             usersBuild.append(value).append(",");
         }
         usersBuild.deleteCharAt(usersBuild.length()-1);
-        user.setWordis(wordIsBuild.toString());
+        user.setWordIS(wordIsBuild.toString());
         user.setWords(wordsBuild.toString());
         user.setGameId(lastGame.getId());
         user.setWxPhoto(gUser.getWxPhoto());

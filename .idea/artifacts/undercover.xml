@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="undercover">
+    <output-path>$PROJECT_DIR$/out/artifacts/undercover</output-path>
+    <root id="archive" name="undercover.war">
+      <element id="artifact" artifact-name="undercover:war exploded" />
+      <element id="dir-copy" path="$PROJECT_DIR$/web" />
+    </root>
+  </artifact>
+</component>

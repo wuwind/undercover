@@ -1,6 +1,7 @@
 package com.wuwind.controller.api;
 
 import com.wuwind.dao.bean.Game;
+import com.wuwind.response.Response;
 import com.wuwind.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,5 +38,13 @@ public class GameController {
         List<Game> all = gameService.getAll();
         Game game = all.get(all.size() - 1);
         return game;
+    }
+
+    @RequestMapping("test")
+    @ResponseBody
+    public Response test(HttpServletRequest request) {
+        Response response = new Response();
+        response.setMsg("test");
+        return response;
     }
 }
