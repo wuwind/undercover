@@ -28,4 +28,9 @@ public class GameServiceImpl implements GameService {
     public int updateGame(Game game) {
         return gameDao.update(game);
     }
+
+    @Override
+    public Game getGameById(long id) {
+        return gameDao.queryById(id);
+    }
 }

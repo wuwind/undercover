@@ -12,4 +12,6 @@ public interface UserService {
 
     int updateUser(User user);
 
+    User getUserById(long id);
+
 }

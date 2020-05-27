@@ -11,4 +11,6 @@ public interface GameService {
     Object addGame(Game game);
 
     int updateGame(Game game);
+
+    Game getGameById(long id);
 }

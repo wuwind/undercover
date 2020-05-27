@@ -11,6 +11,15 @@ public class User {
     private String wordIS;
     private Integer ready;
     private Integer uOut;
+    private Integer num;
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
+    }
 
     public String getWxPhoto() {
         return wxPhoto;
