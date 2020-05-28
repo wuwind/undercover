@@ -47,4 +47,14 @@ public class GameController {
         gameService.updateGame(game);
         return game;
     }
+
+    @RequestMapping("updateGame")
+    @ResponseBody
+    public Game update(Game mGame) {
+        System.out.println(mGame.toString());
+        if (null != mGame && null != mGame.getId() && null != gameService.getGameById(mGame.getId())) {
+            gameService.updateGame(mGame);
+        }
+        return mGame;
+    }
 }

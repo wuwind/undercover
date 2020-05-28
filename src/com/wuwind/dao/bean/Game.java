@@ -116,4 +116,21 @@ public class Game implements Cloneable {
     public void setFinish(Integer finish) {
         this.finish = finish;
     }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", wordId=" + wordId +
+                ", count=" + count +
+                ", normal=" + normal +
+                ", undercover=" + undercover +
+                ", blank=" + blank +
+                ", audience=" + audience +
+                ", sequence='" + sequence + '\'' +
+                ", outSequence='" + outSequence + '\'' +
+                ", lookSequence='" + lookSequence + '\'' +
+                ", finish=" + finish +
+                '}';
+    }
 }
