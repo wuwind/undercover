@@ -41,9 +41,9 @@ public class GameController {
 
     @RequestMapping("finish")
     @ResponseBody
-    public Game finish(Long gameId) {
+    public Game finish(Long gameId, int finish) {
         Game game = gameService.getGameById(gameId);
-        game.setFinish(1);
+        game.setFinish(finish);
         gameService.updateGame(game);
         return game;
     }
