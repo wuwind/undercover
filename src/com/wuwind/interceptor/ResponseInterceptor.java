@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @ControllerAdvice
 @RestControllerAdvice("com.wuwind.controller.api")
-public class LogResponseBodyAdvice implements ResponseBodyAdvice {
+public class ResponseInterceptor implements ResponseBodyAdvice {
 
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {

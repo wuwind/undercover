@@ -4,6 +4,11 @@
     <root id="archive" name="undercover.war">
       <element id="artifact" artifact-name="undercover:war exploded" />
       <element id="dir-copy" path="$PROJECT_DIR$/web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="log4j-1.2.17" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>

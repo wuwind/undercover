@@ -14,6 +14,9 @@ import java.util.List;
 @RequestMapping("api")
 public class WordController {
 
+    //在需要使用日志的地方加上这句代码即可
+//    private static Logger logger = Logger.getLogger(WordController.class);
+
     @Autowired
     WordService wordService;
 
@@ -31,6 +34,7 @@ public class WordController {
     public List<Word> getAllWords(HttpServletRequest request) {
         System.out.println("getAllWords");
         List<Word> all = wordService.getAll();
+//        logger.info("打印日志13132");
         return all;
     }
 }
