@@ -13,4 +13,6 @@ public interface GameService {
     int updateGame(Game game);
 
     Game getGameById(long id);
+
+    List<Game> getAllByRoomId(long roomId);
 }

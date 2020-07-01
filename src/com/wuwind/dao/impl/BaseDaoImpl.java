@@ -2,6 +2,7 @@ package com.wuwind.dao.impl;
 
 
 import com.wuwind.dao.BaseDao;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -23,7 +24,7 @@ import java.util.Map;
 @Repository
 public abstract class BaseDaoImpl<T> extends JdbcDaoSupport implements BaseDao<T> {
 
-    private String tbNmae;
+    protected String tbNmae;
     private Field[] declaredFields;
     private String idName = null;
     private Class<T> tClass;
@@ -37,7 +38,7 @@ public abstract class BaseDaoImpl<T> extends JdbcDaoSupport implements BaseDao<T
         for (Field declaredField : declaredFields) {
             Class<?> classType = declaredField.getType();
             try {
-                if (!((Class<?>) classType.getField("TYPE").get(null)).isPrimitive() && classType != String.class){
+                if (!((Class<?>) classType.getField("TYPE").get(null)).isPrimitive() && classType != String.class) {
                     continue;
                 }
             } catch (Exception e) {
@@ -89,6 +90,9 @@ public abstract class BaseDaoImpl<T> extends JdbcDaoSupport implements BaseDao<T
         List<T> u = new ArrayList<>();
         u.add(t);
         List<Object> keys = add(u);
+        if (keys == null) {
+            return -1;
+        }
         return keys.get(0);
     }
 
@@ -130,7 +134,8 @@ public abstract class BaseDaoImpl<T> extends JdbcDaoSupport implements BaseDao<T
                 keys.add(o);
             }
             return keys;
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -149,7 +154,12 @@ public abstract class BaseDaoImpl<T> extends JdbcDaoSupport implements BaseDao<T
     @Override
     public T queryById(Object id) {
         String sql = "select * from " + tbNmae + " where " + idName + " = " + id;
-        return getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper<>(tClass));
+        System.out.println(sql);
+        try {
+            return getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper<>(tClass));
+        } catch (DataAccessException e) {
+            return null;
+        }
     }
 
     @Override

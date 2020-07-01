@@ -33,4 +33,9 @@ public class GameServiceImpl implements GameService {
     public Game getGameById(long id) {
         return gameDao.queryById(id);
     }
+
+    @Override
+    public List<Game> getAllByRoomId(long roomId) {
+        return gameDao.queryByRoomId(roomId);
+    }
 }

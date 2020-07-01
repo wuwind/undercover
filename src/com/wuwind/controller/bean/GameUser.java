@@ -10,6 +10,16 @@ public class GameUser {
     private String wxName;
     private String wxPhoto;
     private List<String> users;
+    private int roomId;
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
 
     public int getNum() {
         return num;
@@ -57,5 +67,18 @@ public class GameUser {
 
     public void setUsers(List<String> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "GameUser{" +
+                "num=" + num +
+                ", wxId='" + wxId + '\'' +
+                ", wxCode='" + wxCode + '\'' +
+                ", wxName='" + wxName + '\'' +
+                ", wxPhoto='" + wxPhoto + '\'' +
+                ", users=" + users +
+                ", roomId=" + roomId +
+                '}';
     }
 }

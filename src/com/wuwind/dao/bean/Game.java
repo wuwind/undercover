@@ -19,6 +19,33 @@ public class Game implements Cloneable {
     private String sequence;
     private String outSequence;
     private String lookSequence;
+    private Long roomId;
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", wordId=" + wordId +
+                ", count=" + count +
+                ", normal=" + normal +
+                ", undercover=" + undercover +
+                ", blank=" + blank +
+                ", audience=" + audience +
+                ", sequence='" + sequence + '\'' +
+                ", outSequence='" + outSequence + '\'' +
+                ", lookSequence='" + lookSequence + '\'' +
+                ", roomId=" + roomId +
+                ", finish=" + finish +
+                '}';
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
 
     private Integer finish;//1开局2平民获胜3卧底获胜
 
@@ -117,20 +144,4 @@ public class Game implements Cloneable {
         this.finish = finish;
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "id=" + id +
-                ", wordId=" + wordId +
-                ", count=" + count +
-                ", normal=" + normal +
-                ", undercover=" + undercover +
-                ", blank=" + blank +
-                ", audience=" + audience +
-                ", sequence='" + sequence + '\'' +
-                ", outSequence='" + outSequence + '\'' +
-                ", lookSequence='" + lookSequence + '\'' +
-                ", finish=" + finish +
-                '}';
-    }
 }

@@ -12,6 +12,33 @@ public class User {
     private Integer ready;
     private Integer uOut;
     private Integer num;
+    private Long roomId;
+    private String createTime;
+    private Integer gameNo;
+
+    public Integer getGameNo() {
+        return gameNo;
+    }
+
+    public void setGameNo(Integer gameNo) {
+        this.gameNo = gameNo;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
 
     public Integer getNum() {
         return num;

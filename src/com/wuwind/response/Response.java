@@ -29,4 +29,13 @@ public class Response<T> {
     }
 
     private T data;
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

@@ -2,10 +2,12 @@ package com.wuwind.controller.api;
 
 import com.wuwind.controller.bean.GameUser;
 import com.wuwind.dao.bean.Game;
+import com.wuwind.dao.bean.Room;
 import com.wuwind.dao.bean.User;
 import com.wuwind.dao.bean.Word;
 import com.wuwind.response.Response;
 import com.wuwind.service.GameService;
+import com.wuwind.service.RoomService;
 import com.wuwind.service.UserService;
 import com.wuwind.service.WordService;
 import com.wuwind.util.StrConverter;
@@ -15,13 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("api")
 public class UsersController {
+
+    private SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
     UserService userService;
@@ -29,6 +32,8 @@ public class UsersController {
     GameService gameService;
     @Autowired
     WordService wordService;
+    @Autowired
+    RoomService roomService;
 
     @RequestMapping("users")
     @ResponseBody
@@ -38,30 +43,44 @@ public class UsersController {
 
     @RequestMapping("ready")
     @ResponseBody
-    public int ready(String wxId, String key) {
-        List<User> all = userService.getAll();
-        User user = null;
-        for (User u : all) {
-            if(u.getWxId().equals(wxId)) {
-                user = u;
-                break;
-            }
+    public int ready(String userId) {
+        User user = userService.getUserById(Long.parseLong(userId));
+        user.setReady(1);
+        return userService.updateUser(user);
+    }
+
+    @RequestMapping("addUsers")
+    @ResponseBody
+    public synchronized Response addUsers(GameUser gUser) {
+        System.out.println("addUsers " + gUser.toString());
+        Response response = new Response();
+
+        List<String> ids = new ArrayList<>();
+        Room room = roomService.select(gUser.getRoomId());
+        int roomNum = room.getNum();
+        for (String user : gUser.getUsers()) {
+            roomNum++;
+            User u = new User();
+            u.setUsers(user);
+            u.setReady(0);
+            u.setWxName(gUser.getWxName());
+            u.setWxPhoto(gUser.getWxPhoto());
+            u.setuOut(0);
+            u.setRoomId((long) gUser.getRoomId());
+            u.setCreateTime(simpleDate.format(new Date()));
+            u.setGameNo(roomNum);
+            ids.add(userService.addUser(u).toString());
         }
-        if(null == user)
-            return 0;
-        int ready = user.getReady();
-        String[] users = user.getUsers().split(",");
-        int index = 0;
-        for (int i = 0; i < users.length; i++) {
-            if(users[i].equals(key)) {
-                index = i;
-                break;
-            }
+        room.setNum(roomNum);
+        int update = roomService.update(room);
+        if(update<1) {
+            response.setCode(0);
+            response.setMsg("加入房间失败，请重试");
+            return response;
         }
-        ready = (ready | (int) (Math.pow(2, index)));
-        user.setReady(ready);
-        userService.updateUser(user);
-        return 1;
+//        gameService.getAllByRoomId(gUser.getRoomId());
+        response.setData(ids);
+        return response;
     }
 
     @RequestMapping("addUser")
@@ -147,7 +166,7 @@ public class UsersController {
         String[] users = user.getUsers().split(",");
         String[] words = user.getWords().split(",");
         for (int i = 0; i < user.getNum(); i++) {
-            if(isReady(user, i))
+            if (isReady(user, i))
                 continue;
             maps.put(users[i], words[i]);
         }

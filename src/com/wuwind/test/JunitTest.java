@@ -1,8 +1,12 @@
 package com.wuwind.test;
 
+import com.wuwind.controller.api.GameController;
 import com.wuwind.dao.bean.Game;
+import com.wuwind.dao.bean.Room;
 import com.wuwind.dao.bean.Word;
+import com.wuwind.response.Response;
 import com.wuwind.service.GameService;
+import com.wuwind.service.RoomService;
 import com.wuwind.service.WordService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +20,25 @@ public class JunitTest extends BaseJunitTest {
     @Autowired
     GameService gameService;
 
+    @Autowired
+    RoomService roomService;
 
-//    @Autowired
-//    WordDao wordDao;
 
+    @Autowired
+    GameController gameController;
+
+    @Test
+    public void getGameByUser() {
+        Response gameByUser = gameController.getGameByUser(new int[]{51,50});
+        System.out.println(gameByUser.toString());
+    }
+
+    @Test
+    public void addRoom() {
+        Room room = new Room();
+        room.setName("room");
+        roomService.add(room);
+    }
 
     @Test
     public void delUserById() {
@@ -77,6 +96,10 @@ public class JunitTest extends BaseJunitTest {
 //        userDao.delete(d);
     }
 
+    @Test
+    public void getGameByRoomId() {
+        List<Game> allByRoomId = gameService.getAllByRoomId(1);
+    }
     @Test
     public void updateUser() {
 //        List<User> d = new ArrayList<>();

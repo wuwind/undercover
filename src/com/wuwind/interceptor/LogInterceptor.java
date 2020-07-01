@@ -25,18 +25,18 @@ public class LogInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        if (modelAndView != null) {
-            logger.info("ViewName: " + modelAndView.getViewName());
-        }
+//        if (modelAndView != null) {
+//            logger.info("ViewName: " + modelAndView.getViewName());
+//        }
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object handler, Exception ex) throws Exception {
-        long beginTime = startTimeThreadLocal.get();//得到线程绑定的局部变量（开始时间）
-        long endTime = System.currentTimeMillis();  //2、结束时间
+//        long beginTime = startTimeThreadLocal.get();//得到线程绑定的局部变量（开始时间）
+//        long endTime = System.currentTimeMillis();  //2、结束时间
         MDC.put("url", request.getRequestURI());
-        logger.info(endTime - beginTime);
+        logger.info(request.getRequestURI());
     }
 
 }

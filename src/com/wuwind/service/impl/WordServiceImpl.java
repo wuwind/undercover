@@ -26,7 +26,7 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public int update(Word word) {
-        return 0;
+        return wordDao.update(word);
     }
 
     @Override
