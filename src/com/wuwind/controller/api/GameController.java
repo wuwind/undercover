@@ -104,8 +104,8 @@ public class GameController {
         //games
         List<Game> games = gameService.getAllByRoomId(mRoom.getId());
         if (null == games || games.isEmpty()) {
-            response.setCode(0);
-            response.setMsg("该房间还未添加游戏");
+            response.setCode(1);
+            response.setMsg("添加游戏中，请稍后刷新");
             return response;
         }
         List<GameResponse> gameResponses = new ArrayList<>();
@@ -140,8 +140,9 @@ public class GameController {
 
     private String getWord(String sequenceStr, int index, Word word) {
         byte[] sequence = StrConverter.toByteArray(sequenceStr);
-        int type = sequence[index];
-        switch (type) {
+        if(index >= sequence.length || index < 0)
+            return "";
+        switch (sequence[index]) {
             case 0:
                 return word.getW1();
             case 1:

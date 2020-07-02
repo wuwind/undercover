@@ -13,4 +13,10 @@ public class RoomDaoImpl extends BaseDaoImpl<Room> implements RoomDao {
         String sql = "select * from " + tbNmae + " where userId = " + userId;
         return queryList(sql);
     }
+
+    @Override
+    public List<Room> getAllOpened() {
+        String sql = "select * from " + tbNmae + " where open = 1";
+        return queryList(sql);
+    }
 }

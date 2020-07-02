@@ -37,6 +37,14 @@ public class RoomController {
         return all;
     }
 
+    @RequestMapping("getAllOpenRooms")
+    @ResponseBody
+    public List<Room> getAllOpenRooms(HttpServletRequest request) {
+        System.out.println("getAllRooms");
+        List<Room> all = roomService.getAllOpened();
+        return all;
+    }
+
     @RequestMapping("closeRoom")
     @ResponseBody
     public Room closeRoom(Room room) {

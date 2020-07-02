@@ -8,4 +8,6 @@ public interface RoomDao extends BaseDao<Room> {
 
     List<Room> getAllByUserId(Object userId);
 
+    List<Room> getAllOpened();
+
 }

@@ -40,6 +40,11 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public List<Room> getAllOpened() {
+        return roomDao.getAllOpened();
+    }
+
+    @Override
     public List<Room> getAllByUserId(Object userId) {
         return roomDao.getAllByUserId(userId);
     }

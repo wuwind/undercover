@@ -16,6 +16,8 @@ public interface RoomService {
 
     List<Room> getAll();
 
+    List<Room> getAllOpened();
+
     List<Room> getAllByUserId(Object userId);
 
 

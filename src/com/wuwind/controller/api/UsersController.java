@@ -54,9 +54,13 @@ public class UsersController {
     public synchronized Response addUsers(GameUser gUser) {
         System.out.println("addUsers " + gUser.toString());
         Response response = new Response();
-
         List<String> ids = new ArrayList<>();
         Room room = roomService.select(gUser.getRoomId());
+        if(null == room) {
+            response.setCode(0);
+            response.setMsg("房间不存在");
+            return response;
+        }
         int roomNum = room.getNum();
         for (String user : gUser.getUsers()) {
             roomNum++;
@@ -79,6 +83,7 @@ public class UsersController {
             return response;
         }
 //        gameService.getAllByRoomId(gUser.getRoomId());
+        response.setCode(1);
         response.setData(ids);
         return response;
     }

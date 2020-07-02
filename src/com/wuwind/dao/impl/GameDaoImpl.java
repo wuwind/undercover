@@ -11,7 +11,7 @@ public class GameDaoImpl extends BaseDaoImpl<Game> implements GameDao {
 
     @Override
     public List<Game> queryByRoomId(long roomId) {
-        String sql = "select * from " + tbNmae + " where roomId = " + roomId;
+        String sql = "select * from " + tbNmae + " where roomId = " + roomId+" and (finish is NULL or finish<>1)";
         return queryList(sql);
     }
 }

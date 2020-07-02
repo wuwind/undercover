@@ -27,9 +27,11 @@ public class JunitTest extends BaseJunitTest {
     @Autowired
     GameController gameController;
 
+
+
     @Test
     public void getGameByUser() {
-        Response gameByUser = gameController.getGameByUser(new int[]{51,50});
+        Response gameByUser = gameController.getGameByUser(new int[]{62});
         System.out.println(gameByUser.toString());
     }
 
