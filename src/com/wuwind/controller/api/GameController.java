@@ -96,7 +96,7 @@ public class GameController {
             response.setMsg("没有找到你的房间");
             return response;
         }
-        if (mRoom.getOpen() != 1) {
+        if (mRoom.getOpen() == null || mRoom.getOpen() == 0) {
             response.setCode(0);
             response.setMsg("你的房间已关闭");
             return response;

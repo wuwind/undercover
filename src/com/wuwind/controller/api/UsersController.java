@@ -61,9 +61,10 @@ public class UsersController {
             response.setMsg("房间不存在");
             return response;
         }
-        int roomNum = room.getNum();
+        Integer roomNum = room.getNum();
+        if(null == roomNum)
+            roomNum = 0;
         for (String user : gUser.getUsers()) {
-            roomNum++;
             User u = new User();
             u.setUsers(user);
             u.setReady(0);
@@ -74,6 +75,7 @@ public class UsersController {
             u.setCreateTime(simpleDate.format(new Date()));
             u.setGameNo(roomNum);
             ids.add(userService.addUser(u).toString());
+            roomNum++;
         }
         room.setNum(roomNum);
         int update = roomService.update(room);
@@ -82,7 +84,6 @@ public class UsersController {
             response.setMsg("加入房间失败，请重试");
             return response;
         }
-//        gameService.getAllByRoomId(gUser.getRoomId());
         response.setCode(1);
         response.setData(ids);
         return response;
