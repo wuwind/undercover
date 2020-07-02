@@ -22,8 +22,9 @@ public class RoomController {
 
     @RequestMapping("addRoom")
     @ResponseBody
-    public Room addRoom(HttpServletRequest request, Room room) {
-        System.out.println("room "+room.getName());
+    public Room addRoom(String name) {
+        Room room = new Room();
+        room.setName(name);
         room.setOpen(1);
         Object add = roomService.add(room);
         return room;
@@ -52,6 +53,20 @@ public class RoomController {
         room = roomService.select(room.getId());
         room.setOpen(0);
         roomService.update(room);
+        return room;
+    }
+
+    @RequestMapping("updateRoom")
+    @ResponseBody
+    public Room updateRoom(Room room) {
+        roomService.update(room);
+        return room;
+    }
+
+    @RequestMapping("deleteRoom")
+    @ResponseBody
+    public Room deleteRoom(Room room) {
+        roomService.delete(room);
         return room;
     }
 }

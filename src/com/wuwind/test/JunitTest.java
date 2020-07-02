@@ -38,7 +38,7 @@ public class JunitTest extends BaseJunitTest {
     @Test
     public void addRoom() {
         Room room = new Room();
-        room.setName("room");
+        room.setName("rrr");
         roomService.add(room);
     }
 

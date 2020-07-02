@@ -7,6 +7,33 @@ public class Room {
     private Integer num;
     private Integer gameCount;
     private Integer open;
+    private Integer mLock;
+    private String createTime;
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getmLock() {
+        return mLock;
+    }
+
+    public void setmLock(Integer mLock) {
+        this.mLock = mLock;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
     public Long getId() {
         return id;

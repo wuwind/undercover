@@ -9,8 +9,27 @@
     <context:component-scan base-package="com.wuwind.controller"/>
     <mvc:annotation-driven/>
 
-<!--    <mvc:resources location="/WEB-INF/page/css/" mapping="/css/**" />-->
-<!--    <mvc:resources location="/WEB-INF/page/js/" mapping="/js/**" />-->
+
+    <!-- StringHttpMessageConverter编码为UTF-8，防止乱码 -->
+    <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+        <constructor-arg value="UTF-8"/>
+        <property name="supportedMediaTypes">
+            <list>
+                <bean class="org.springframework.http.MediaType">
+                    <constructor-arg index="0" value="text"/>
+                    <constructor-arg index="1" value="plain"/>
+                    <constructor-arg index="2" value="UTF-8"/>
+                </bean>
+                <bean class="org.springframework.http.MediaType">
+                    <constructor-arg index="0" value="*"/>
+                    <constructor-arg index="1" value="*"/>
+                    <constructor-arg index="2" value="UTF-8"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <!--    <mvc:resources location="/WEB-INF/page/css/" mapping="/css/**" />-->
+    <!--    <mvc:resources location="/WEB-INF/page/js/" mapping="/js/**" />-->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/page/"/>
@@ -25,13 +44,13 @@
 
 
     <!--mysql-->
-<!--    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
-<!--         <property name="locations">-->
-<!--             <list>-->
-<!--                 <value>classpath:db-config.properties</value>-->
-<!--             </list>-->
-<!--         </property>-->
-<!--     </bean>-->
+    <!--    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+    <!--         <property name="locations">-->
+    <!--             <list>-->
+    <!--                 <value>classpath:db-config.properties</value>-->
+    <!--             </list>-->
+    <!--         </property>-->
+    <!--     </bean>-->
 
     <context:property-placeholder location="classpath:db-config.properties"/>
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
@@ -50,9 +69,9 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
 
-<!--    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">-->
-<!--    <constructor-arg ref="dataSource" />-->
-<!--    </bean>-->
+    <!--    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">-->
+    <!--    <constructor-arg ref="dataSource" />-->
+    <!--    </bean>-->
 
     <mvc:interceptors>
         <bean class="com.wuwind.interceptor.LoginInterceptor"/>
@@ -65,9 +84,9 @@
     <!--<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>-->
 
     <!--<mvc:resources mapping="/js/" location="/js/**"/>-->
-<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-<!--        <property name="maxUploadSize" value="5000"/>-->
-<!--    </bean>-->
+    <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+    <!--        <property name="maxUploadSize" value="5000"/>-->
+    <!--    </bean>-->
 
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
