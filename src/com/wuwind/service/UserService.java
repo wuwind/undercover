@@ -14,4 +14,5 @@ public interface UserService {
 
     User getUserById(long id);
 
+    List<User> getAllByRoomId(Integer roomId);
 }

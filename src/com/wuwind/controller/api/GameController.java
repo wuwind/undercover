@@ -35,8 +35,11 @@ public class GameController {
 
     @RequestMapping("games")
     @ResponseBody
-    public List<Game> getGames() {
-        return gameService.getAll();
+    public List<Game> getGames(Integer roomId) {
+        if(null == roomId) {
+            return gameService.getAll();
+        }
+        return gameService.getAllByRoomId(roomId);
     }
 
     @RequestMapping("addGame")

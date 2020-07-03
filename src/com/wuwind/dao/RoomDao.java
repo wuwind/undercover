@@ -10,4 +10,5 @@ public interface RoomDao extends BaseDao<Room> {
 
     List<Room> getAllOpened();
 
+    List<Room> getAllUseRooms();
 }

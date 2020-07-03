@@ -10,6 +10,15 @@ public class Room {
     private Integer mLock;
     private String createTime;
     private String password;
+    private Integer del;
+
+    public Integer getDel() {
+        return del;
+    }
+
+    public void setDel(Integer del) {
+        this.del = del;
+    }
 
     public String getPassword() {
         return password;

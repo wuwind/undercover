@@ -37,8 +37,11 @@ public class UsersController {
 
     @RequestMapping("users")
     @ResponseBody
-    public List<User> getUsers() {
-        return userService.getAll();
+    public List<User> getUsers(Integer roomId) {
+        if(null == roomId) {
+            return userService.getAll();
+        }
+        return userService.getAllByRoomId(roomId);
     }
 
     @RequestMapping("ready")

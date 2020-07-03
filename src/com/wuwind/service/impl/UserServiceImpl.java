@@ -34,4 +34,9 @@ public class UserServiceImpl implements UserService {
         return userDao.queryById(id);
     }
 
+    @Override
+    public List<User> getAllByRoomId(Integer roomId) {
+        return userDao.getAllByRoomId(roomId);
+    }
+
 }

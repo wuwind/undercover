@@ -23,8 +23,8 @@ public class WordController {
     @RequestMapping("addWord")
     @ResponseBody
     public Word addWord(HttpServletRequest request, Word word) {
-        System.out.println("word "+word.getW1());
-        System.out.println("getParameter "+request.getParameter("w1"));
+        System.out.println("word " + word.getW1());
+        System.out.println("getParameter " + request.getParameter("w1"));
         Object add = wordService.add(word);
         return word;
     }
@@ -32,9 +32,12 @@ public class WordController {
     @RequestMapping("getAllWords")
     @ResponseBody
     public List<Word> getAllWords(HttpServletRequest request) {
-        System.out.println("getAllWords");
-        List<Word> all = wordService.getAll();
-//        logger.info("打印日志13132");
-        return all;
+        return wordService.getAll();
+    }
+
+    @RequestMapping("getWordById")
+    @ResponseBody
+    public Word getWordById(Integer wordId) {
+        return wordService.select(wordId);
     }
 }
