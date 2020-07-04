@@ -23,9 +23,12 @@ public class WordController {
     @RequestMapping("addWord")
     @ResponseBody
     public Word addWord(HttpServletRequest request, Word word) {
-        System.out.println("word " + word.getW1());
-        System.out.println("getParameter " + request.getParameter("w1"));
+//        System.out.println("word " + word.getW1());
+//        System.out.println("getParameter " + request.getParameter("w1"));
         Object add = wordService.add(word);
+        if(null == add)
+            return null;
+        word.setId(((Number) add).longValue());
         return word;
     }
 

@@ -20,6 +20,8 @@ public class Game implements Cloneable {
     private String outSequence;
     private String lookSequence;
     private Long roomId;
+    private Integer finish;
+    private Integer win;//1平民获胜 2卧底获胜
 
     @Override
     public String toString() {
@@ -36,7 +38,16 @@ public class Game implements Cloneable {
                 ", lookSequence='" + lookSequence + '\'' +
                 ", roomId=" + roomId +
                 ", finish=" + finish +
+                ", win=" + win +
                 '}';
+    }
+
+    public Integer getWin() {
+        return win;
+    }
+
+    public void setWin(Integer win) {
+        this.win = win;
     }
 
     public Long getRoomId() {
@@ -47,7 +58,6 @@ public class Game implements Cloneable {
         this.roomId = roomId;
     }
 
-    private Integer finish;//1开局2平民获胜3卧底获胜
 
     public Game() {
     }

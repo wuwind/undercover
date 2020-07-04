@@ -11,6 +11,15 @@ public class Room {
     private String createTime;
     private String password;
     private Integer del;
+    private Integer punish;
+
+    public Integer getPunish() {
+        return punish;
+    }
+
+    public void setPunish(Integer punish) {
+        this.punish = punish;
+    }
 
     public Integer getDel() {
         return del;

@@ -208,4 +208,15 @@ public class UsersController {
         return null;
     }
 
+    @RequestMapping("getRoomByUserId")
+    @ResponseBody
+    public Room getRoomByUserId(int[] userIds) {
+        if(null == userIds)
+            return null;
+        User user = userService.getUserById(userIds[0]);
+        if(null == user)
+            return null;
+        Room room = roomService.select(user.getRoomId());
+        return room;
+    }
 }

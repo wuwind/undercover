@@ -45,7 +45,10 @@ public class GameController {
     @RequestMapping("addGame")
     @ResponseBody
     public Game addGame(HttpServletRequest request, Game game) {
-        gameService.addGame(game);
+        Object o = gameService.addGame(game);
+        if(null == o)
+            return null;
+        game.setId(((Number) o).longValue());
         return game;
     }
 
@@ -60,9 +63,10 @@ public class GameController {
 
     @RequestMapping("finish")
     @ResponseBody
-    public Game finish(Long gameId, int finish) {
+    public Game finish(Long gameId, int finish, int win) {
         Game game = gameService.getGameById(gameId);
         game.setFinish(finish);
+        game.setWin(win);
         gameService.updateGame(game);
         return game;
     }
