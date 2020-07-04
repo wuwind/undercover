@@ -36,7 +36,7 @@ public class GameController {
     @RequestMapping("games")
     @ResponseBody
     public List<Game> getGames(Integer roomId) {
-        if(null == roomId) {
+        if (null == roomId) {
             return gameService.getAll();
         }
         return gameService.getAllByRoomId(roomId);
@@ -46,7 +46,7 @@ public class GameController {
     @ResponseBody
     public Game addGame(HttpServletRequest request, Game game) {
         Object o = gameService.addGame(game);
-        if(null == o)
+        if (null == o)
             return null;
         game.setId(((Number) o).longValue());
         return game;
@@ -129,7 +129,7 @@ public class GameController {
                 if (user == null)
                     continue;
                 Integer gameNo = user.getGameNo();
-                if(gameNo == null)
+                if (gameNo == null)
                     continue;
                 String wordStr = getWord(game.getSequence(), gameNo, word);
                 GameResponse.UserWord userWord = new GameResponse.UserWord();
@@ -147,7 +147,7 @@ public class GameController {
 
     private String getWord(String sequenceStr, int index, Word word) {
         byte[] sequence = StrConverter.toByteArray(sequenceStr);
-        if(index >= sequence.length || index < 0)
+        if (index >= sequence.length || index < 0)
             return "";
         switch (sequence[index]) {
             case 0:

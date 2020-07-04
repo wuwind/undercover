@@ -64,6 +64,11 @@ public class UsersController {
             response.setMsg("房间不存在");
             return response;
         }
+        if (room.getNum() >= room.getGameCount()) {
+            response.setCode(0);
+            response.setMsg("房间已人满");
+            return response;
+        }
         Integer roomNum = room.getNum();
         if(null == roomNum)
             roomNum = 0;
