@@ -35,8 +35,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getUserByName(String name) {
+        return userDao.queryByName(name);
+    }
+
+    @Override
     public List<User> getAllByRoomId(Integer roomId) {
         return userDao.getAllByRoomId(roomId);
+    }
+
+    @Override
+    public int delUserById(int userId) {
+        return userDao.deleteById(userId);
     }
 
 }

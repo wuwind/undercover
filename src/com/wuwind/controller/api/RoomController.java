@@ -1,7 +1,9 @@
 package com.wuwind.controller.api;
 
 import com.wuwind.dao.bean.Room;
+import com.wuwind.dao.bean.User;
 import com.wuwind.service.RoomService;
+import com.wuwind.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,8 @@ public class RoomController {
 
     @Autowired
     RoomService roomService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping("addRoom")
     @ResponseBody
@@ -75,6 +79,18 @@ public class RoomController {
     @ResponseBody
     public Room deleteRoom(Room room) {
         roomService.delete(room);
+        return room;
+    }
+
+    @RequestMapping("getRoomByUserId")
+    @ResponseBody
+    public Room getRoomByUserId(int[] userIds) {
+        if (null == userIds)
+            return null;
+        User user = userService.getUserById(userIds[0]);
+        if (null == user)
+            return null;
+        Room room = roomService.select(user.getRoomId());
         return room;
     }
 

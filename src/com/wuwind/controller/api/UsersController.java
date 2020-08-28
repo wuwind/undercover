@@ -38,7 +38,7 @@ public class UsersController {
     @RequestMapping("users")
     @ResponseBody
     public List<User> getUsers(Integer roomId) {
-        if(null == roomId) {
+        if (null == roomId) {
             return userService.getAll();
         }
         return userService.getAllByRoomId(roomId);
@@ -59,19 +59,31 @@ public class UsersController {
         Response response = new Response();
         List<String> ids = new ArrayList<>();
         Room room = roomService.select(gUser.getRoomId());
-        if(null == room) {
+        if (null == room) {
             response.setCode(0);
             response.setMsg("房间不存在");
             return response;
         }
-        if (room.getNum() >= room.getGameCount()) {
-            response.setCode(0);
-            response.setMsg("房间已人满");
-            return response;
-        }
+//        if (room.getNum() >= room.getGameCount()) {
+//            response.setCode(0);
+//            response.setMsg("房间已人满");
+//            return response;
+//        }
         Integer roomNum = room.getNum();
-        if(null == roomNum)
+        if (null == roomNum)
             roomNum = 0;
+        for (String user : gUser.getUsers()) {
+            List<User> userByName = userService.getUserByName(user);
+            if (null != userByName) {
+                for (User user1 : userByName) {
+                    if(user1.getRoomId() == gUser.getRoomId()) {
+                        response.setCode(0);
+                        response.setMsg(user+" 昵称重复，换一个");
+                        return response;
+                    }
+                }
+            }
+        }
         for (String user : gUser.getUsers()) {
             User u = new User();
             u.setUsers(user);
@@ -87,7 +99,7 @@ public class UsersController {
         }
         room.setNum(roomNum);
         int update = roomService.update(room);
-        if(update<1) {
+        if (update < 1) {
             response.setCode(0);
             response.setMsg("加入房间失败，请重试");
             return response;
@@ -213,15 +225,17 @@ public class UsersController {
         return null;
     }
 
-    @RequestMapping("getRoomByUserId")
+    @RequestMapping("getUsersByRoomId")
     @ResponseBody
-    public Room getRoomByUserId(int[] userIds) {
-        if(null == userIds)
+    public List<User> getUsersByRoomId(int roomId) {
+        if (roomId < 0)
             return null;
-        User user = userService.getUserById(userIds[0]);
-        if(null == user)
-            return null;
-        Room room = roomService.select(user.getRoomId());
-        return room;
+        return userService.getAllByRoomId(roomId);
+    }
+
+    @RequestMapping("delUserById")
+    @ResponseBody
+    public int delUserById(int userId) {
+        return userService.delUserById(userId);
     }
 }

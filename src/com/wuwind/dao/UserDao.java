@@ -9,4 +9,6 @@ public interface UserDao extends BaseDao<User> {
 
 
     List<User> getAllByRoomId(Integer roomId);
+
+    List<User> queryByName(String name);
 }

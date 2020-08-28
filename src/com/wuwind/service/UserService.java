@@ -14,5 +14,9 @@ public interface UserService {
 
     User getUserById(long id);
 
+    List<User> getUserByName(String name);
+
     List<User> getAllByRoomId(Integer roomId);
+
+    int delUserById(int userId);
 }
