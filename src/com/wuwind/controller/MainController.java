@@ -9,6 +9,7 @@ import com.wuwind.service.VoteService;
 import com.wuwind.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -71,11 +72,15 @@ public class MainController {
     }
 
     @RequestMapping("vote/vote")
+    @Transactional
     public ModelAndView increaseVote(HttpServletRequest request, String id, String key) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("vote");
-        request.getSession().setAttribute("token", new Date().getTime());
         Vote vote = voteService.select(id);
+        if(request.getSession().getAttribute("token") != null) {
+            modelAndView.addObject("vote", new VoteResponse(vote));
+            return modelAndView;
+        }
         String[] items = vote.getItems().split(",");
         String[] counts = vote.getCounts().split(",");
         String countStr = "";
@@ -94,6 +99,7 @@ public class MainController {
         voteService.update(vote);
         System.out.println(vote.toString());
         modelAndView.addObject("vote", new VoteResponse(vote));
+        request.getSession().setAttribute("token", new Date().getTime());
         return modelAndView;
     }
 

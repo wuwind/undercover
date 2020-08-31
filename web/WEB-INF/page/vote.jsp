@@ -12,7 +12,6 @@
 <body style="background-image:url(body.jpeg); background-size:100%; background-repeat: no-repeat;">
  -->
 <body>
-
 <div align="center">
     <h4>${vote.title}</h4>
     <table id="main">
@@ -36,7 +35,7 @@
 
         <tr>
             <td><p>
-                <input type="submit" value="确认投票" onclick="vote()"/>
+                <button type="button" onclick="vote()">确认投票</button>
             </td>
         </tr>
     </table>
@@ -44,18 +43,25 @@
 </body>
 <script type="text/javascript">
 
+    var isClick = false;
     //在每个投票选项后面写了个div，用div的宽度来代表当前该选项的投票数。
     function vote() {	//函数vote，当点击确认投票的时候，调用vote方法
-
+        if(isClick)
+            return;
+        isClick = true;
+        setTimeout(function() {
+            isClick = false;
+        }, 5000);//5秒内不能重复点击
         <%
         if(null !=  session.getAttribute("token")) {
         %>
         alert("不要重复投票");
         return;
         <%
+        } else {
+//            session.setAttribute("token",new Date().getTime() + "" );
         }
         %>
-
         //for循环的条件是，所有投票选项的个数。
         for (var i = 0; i < document.getElementsByName("option").length; i++) {
             //查找到是哪个投票选项被选中
@@ -68,7 +74,7 @@
                 var label = "label" + i;//lable标签里面写的是当前的投票数目。
                 var num = document.getElementById(label).innerText;//获取到当前的票数
                 var key = document.getElementsByName("option")[i].value;//获取到当前的票数
-                document.getElementById(label).innerText = ++num;//票数加1，并修改原值
+                // document.getElementById(label).innerText = ++num;//票数加1，并修改原值
                 post("<%=request.getContextPath()%>/vote/vote", {"key": key, "id": ${vote.id}});
                 alert("投票成功");
             }
