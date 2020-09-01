@@ -12,11 +12,11 @@ public interface UserService {
 
     int updateUser(User user);
 
-    User getUserById(long id);
+    User getUserById(Object id);
 
     List<User> getUserByName(String name);
 
     List<User> getAllByRoomId(Integer roomId);
 
-    int delUserById(int userId);
+    int delUserById(Object userId);
 }

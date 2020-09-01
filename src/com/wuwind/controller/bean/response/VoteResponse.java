@@ -45,5 +45,6 @@ public class VoteResponse {
             map.put(items[i], counts[i]);
         }
     }
+    public VoteResponse(){}
 
 }

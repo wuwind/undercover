@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(long id) {
+    public User getUserById(Object id) {
         return userDao.queryById(id);
     }
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int delUserById(int userId) {
+    public int delUserById(Object userId) {
         return userDao.deleteById(userId);
     }
 

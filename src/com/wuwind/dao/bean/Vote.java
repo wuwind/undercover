@@ -11,6 +11,19 @@ public class Vote {
      * 逗号隔开
      */
     private String counts;
+    /**
+     * 0 单选
+     * 1 多选
+     */
+    private Integer type;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public Long getId() {
         return id;
