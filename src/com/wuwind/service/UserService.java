@@ -19,4 +19,6 @@ public interface UserService {
     List<User> getAllByRoomId(Integer roomId);
 
     int delUserById(Object userId);
+
+    Object addWxUser(User user);
 }

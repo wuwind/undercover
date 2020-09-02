@@ -49,4 +49,20 @@ public class UserServiceImpl implements UserService {
         return userDao.deleteById(userId);
     }
 
+    @Override
+    public Object addWxUser(User user) {
+        Object add;
+        List<User> users = userDao.queryByWxId(user.getWxId());
+        if(null != users && users.size()>0) {
+            User user1 = users.get(0);
+            user1.setWxName( user.getWxName());
+            user1.setWxPhoto(user.getWxPhoto());
+            userDao.update(user1);
+            add = user1.getId();
+        } else {
+            add = userDao.add(user);
+        }
+        return add;
+    }
+
 }

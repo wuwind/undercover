@@ -261,6 +261,7 @@ public abstract class BaseDaoImpl<T> extends JdbcDaoSupport implements BaseDao<T
 
     private void getValue(StringBuilder sb, Object o) {
         if (o instanceof String) {
+            o = ((String) o).replace("\"","\'");
             sb.append("\"");
             sb.append(o);
             sb.append("\"");

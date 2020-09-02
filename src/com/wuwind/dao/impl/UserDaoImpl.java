@@ -19,4 +19,10 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
         String sql = "select * from " + tbNmae + " where users = '" + name + "'";
         return queryList(sql);
     }
+
+    @Override
+    public List<User> queryByWxId(String wxId) {
+        String sql = "select * from " + tbNmae + " where wxId = '" + wxId + "'";
+        return queryList(sql);
+    }
 }

@@ -1,5 +1,7 @@
 package com.wuwind.controller.api;
 
+import com.alibaba.fastjson.JSON;
+import com.wuwind.controller.bean.VoteBean;
 import com.wuwind.controller.bean.response.VoteResponse;
 import com.wuwind.dao.bean.User;
 import com.wuwind.dao.bean.Vote;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("api")
@@ -33,6 +35,26 @@ public class VoteController {
     @Autowired
     UserService userService;
 
+
+    @RequestMapping("addVoteItems")
+    @ResponseBody
+    public Object addVoteItems(HttpServletRequest request,String title, String[] items, Integer type) {
+        System.out.println("title " + title);
+        System.out.println("items " + Arrays.toString(items));
+        if(null == items || items.length<=0)
+            return null;
+        List<VoteBean> data = new ArrayList<>();
+        for (String item : items) {
+            VoteBean bean = new VoteBean();
+            bean.setItem(item);
+            data.add(bean);
+        }
+        Vote vote = new Vote();
+        vote.setItems(JSON.toJSONString(data));
+        vote.setTitle(title);
+        vote.setType(type);
+        return voteService.add(vote);
+    }
 
     @RequestMapping("addVote")
     @ResponseBody
@@ -65,29 +87,23 @@ public class VoteController {
     @ResponseBody
     public VoteResponse getVoteById(Integer voteId) {
         Vote vote = voteService.select(voteId);
-        if(null == vote) {
+        if (null == vote) {
             return null;
         }
+        VoteResponse voteResponse = new VoteResponse(vote);
         List<VoteForm> votes = voteFormService.getByVoteId(voteId);
-        String[] split = vote.getItems().split(",");
-        int[] counts = new int[split.length];
         for (VoteForm voteForm : votes) {
-            counts[voteForm.getIdx()]++;
+            if (null == voteForm.getIdx() || voteForm.getIdx() >= voteResponse.getVotes().size())
+                continue;
+            VoteBean voteBean = voteResponse.getVotes().get(voteForm.getIdx());
+            voteBean.setCount(voteBean.getCount() + 1);
         }
-        Map<String, String> data = new HashMap<>();
-        for (int i = 0; i < split.length; i++) {
-            data.put(split[i], counts[i]+"");
-        }
-        VoteResponse voteResponse = new VoteResponse();
-        voteResponse.setId(voteId.longValue());
-        voteResponse.setTitle(vote.getTitle());
-        voteResponse.setMap(data);
         return voteResponse;
     }
 
     @RequestMapping("vote")
     @ResponseBody
-    public Response vote(Long voteId, Long userId, Integer index) {
+    public Response vote(Long voteId, Long userId, Integer idx) {
         Response response = new Response();
         Vote vote = voteService.select(voteId);
         if (null == vote) {
@@ -97,7 +113,7 @@ public class VoteController {
         }
         User user = userService.getUserById(userId);
         if (null == user) {
-            response.setCode(0);
+            response.setCode(-1);
             response.setMsg("请先登录");
             return response;
         }
@@ -105,7 +121,7 @@ public class VoteController {
         if (vote.getType() == null || vote.getType() == 0) {
             if (voteForms != null && !voteForms.isEmpty()) {
                 for (VoteForm voteForm : voteForms) {
-                    if(voteForm.getVoteId() == voteId) {
+                    if (voteForm.getVoteId().longValue() == voteId) {
                         response.setCode(0);
                         response.setMsg("你已投过票");
                         return response;
@@ -114,7 +130,7 @@ public class VoteController {
             }
         } else {
             for (VoteForm voteForm : voteForms) {
-                if (voteForm.getIdx().intValue() == index && voteForm.getVoteId().longValue() == voteId) {
+                if (voteForm.getIdx().intValue() == idx && voteForm.getVoteId().longValue() == voteId) {
                     response.setCode(0);
                     response.setMsg("你已投过票");
                     return response;
@@ -124,7 +140,7 @@ public class VoteController {
         VoteForm voteForm = new VoteForm();
         voteForm.setVoteId(voteId);
         voteForm.setUserId(userId);
-        voteForm.setIdx(index);
+        voteForm.setIdx(idx);
         voteForm.setCreateTime(new Date().getTime());
         Object add = voteFormService.add(voteForm);
         response.setData(add);

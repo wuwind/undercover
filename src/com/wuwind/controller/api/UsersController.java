@@ -1,5 +1,6 @@
 package com.wuwind.controller.api;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wuwind.controller.bean.GameUser;
 import com.wuwind.dao.bean.Game;
 import com.wuwind.dao.bean.Room;
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -52,6 +57,40 @@ public class UsersController {
         return userService.updateUser(user);
     }
 
+    @RequestMapping("addWxUsers")
+    @ResponseBody
+    public synchronized Response addWxUsers(GameUser gUser) {
+        Response response = new Response();
+        if (gUser.getWxCode() == null) {
+            response.setMsg("wx code is null");
+            return response;
+        }
+        String openId = getopenid("wxa83fc82123d0f0fe", gUser.getWxCode(), "059942c06789f6e9b39a21d34b993eda");
+        if (null == openId) {
+            response.setMsg("get openid is null");
+            return response;
+        }
+        JSONObject jsonObject = JSONObject.parseObject(openId);
+        String openid = jsonObject.get("openid").toString();
+        User u = new User();
+        u.setUsers(gUser.getWxName());
+        u.setWxId(openid);
+        u.setReady(0);
+        u.setWxName(gUser.getWxName());
+        u.setWxPhoto(gUser.getWxPhoto());
+        u.setuOut(0);
+        u.setRoomId((long) gUser.getRoomId());
+        u.setCreateTime(simpleDate.format(new Date()));
+        Object id =  userService.addWxUser(u);
+        if(null == id) {
+            response.setMsg("insert error");
+            return response;
+        }
+        response.setCode(1);
+        response.setData(id);
+        return response;
+    }
+
     @RequestMapping("addUsers")
     @ResponseBody
     public synchronized Response addUsers(GameUser gUser) {
@@ -76,9 +115,9 @@ public class UsersController {
             List<User> userByName = userService.getUserByName(user);
             if (null != userByName) {
                 for (User user1 : userByName) {
-                    if(user1.getRoomId() == gUser.getRoomId()) {
+                    if (user1.getRoomId() == gUser.getRoomId()) {
                         response.setCode(0);
-                        response.setMsg(user+" 昵称重复，换一个");
+                        response.setMsg(user + " 昵称重复，换一个");
                         return response;
                     }
                 }
@@ -109,13 +148,51 @@ public class UsersController {
         return response;
     }
 
+    public String getopenid(String appid, String code, String secret) {
+        BufferedReader in = null;
+//appid和secret是开发者分别是小程序ID和小程序密钥，开发者通过微信公众平台-》设置-》开发设置就可以直接获取，
+        String url = "https://api.weixin.qq.com/sns/jscode2session?appid="
+                + appid + "&secret=" + secret + "&js_code=" + code + "&grant_type=authorization_code";
+        try {
+            URL weChatUrl = new URL(url);
+// 打开和URL之间的连接
+            URLConnection connection = weChatUrl.openConnection();
+// 设置通用的请求属性
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+// 建立实际的连接
+            connection.connect();
+// 定义 BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuffer sb = new StringBuffer();
+            String line;
+            while ((line = in.readLine()) != null) {
+                sb.append(line);
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+// 使用finally块来关闭输入流
+        finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @RequestMapping("addUser")
     @ResponseBody
     public synchronized Response addUser(HttpServletRequest request, GameUser gUser) {
-        System.out.println("addUser " + this.toString());
+        System.out.println("addUser " + gUser.toString());
         Response response = new Response();
-        if (gUser.getWxId() == null) {
-            response.setMsg("wx id is null");
+        if (gUser.getWxCode() == null) {
+            response.setMsg("wx code is null");
             return response;
         }
         User user = new User();

@@ -1,16 +1,17 @@
 package com.wuwind.controller.bean.response;
 
+import com.alibaba.fastjson.JSON;
+import com.wuwind.controller.bean.VoteBean;
 import com.wuwind.dao.bean.Vote;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class VoteResponse {
 
     private Long id;
     private String title;
 
-    private Map<String, String> map = new HashMap<>();
+    private List<VoteBean> votes;
 
     public Long getId() {
         return id;
@@ -28,23 +29,20 @@ public class VoteResponse {
         this.title = title;
     }
 
-    public Map<String, String> getMap() {
-        return map;
+    public List<VoteBean> getVotes() {
+        return votes;
     }
 
-    public void setMap(Map<String, String> map) {
-        this.map = map;
+    public void setVotes(List<VoteBean> votes) {
+        this.votes = votes;
     }
 
     public VoteResponse(Vote vote) {
         id = vote.getId();
         title = vote.getTitle();
-        String[] items = vote.getItems().split(",");
-        String[] counts = vote.getCounts().split(",");
-        for (int i = 0; i < counts.length; i++) {
-            map.put(items[i], counts[i]);
-        }
+        votes = JSON.parseArray(vote.getItems(), VoteBean.class);
     }
+
     public VoteResponse(){}
 
 }
