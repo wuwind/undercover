@@ -319,9 +319,19 @@ public class UsersController {
     @RequestMapping("getPermission")
     @ResponseBody
     public String[] getPermission(Integer userId) {
-        if(userId!=999)
-            return null;
+//        if(userId!=999)
+//            return null;
         return new String[]{"add_vote"};
+    }
+
+    @RequestMapping("getProperties")
+    @ResponseBody
+    public Map<String, String> getProperties(Integer userId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("word", "");
+        map.put("selectWord", "选词");
+        map.put("showCount", "0");
+        return map;
     }
 
 }

@@ -107,7 +107,7 @@ public class VoteController {
         Vote vote = voteService.select(voteId);
         if (null == vote) {
             response.setCode(0);
-            response.setMsg("投票已取消");
+            response.setMsg("已取消");
             return response;
         }
         User user = userService.getUserById(userId);
@@ -122,7 +122,7 @@ public class VoteController {
                 for (VoteForm voteForm : voteForms) {
                     if (voteForm.getVoteId().longValue() == voteId) {
                         response.setCode(0);
-                        response.setMsg("你已投过票");
+                        response.setMsg("别重复");
                         return response;
                     }
                 }
@@ -131,7 +131,7 @@ public class VoteController {
             for (VoteForm voteForm : voteForms) {
                 if (voteForm.getIdx().intValue() == idx && voteForm.getVoteId().longValue() == voteId) {
                     response.setCode(0);
-                    response.setMsg("你已投过票");
+                    response.setMsg("别重复");
                     return response;
                 }
             }
@@ -143,6 +143,7 @@ public class VoteController {
         voteForm.setCreateTime(new Date().getTime());
         Object add = voteFormService.add(voteForm);
         response.setData(add);
+        response.setMsg("Success");
         response.setCode(1);
         return response;
     }
