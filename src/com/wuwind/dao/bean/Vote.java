@@ -17,6 +17,16 @@ public class Vote {
      */
     private Integer type;
 
+    private Long createTime;
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
     public Integer getType() {
         return type;
     }

@@ -315,4 +315,13 @@ public class UsersController {
     public int delUserById(int userId) {
         return userService.delUserById(userId);
     }
+
+    @RequestMapping("getPermission")
+    @ResponseBody
+    public String[] getPermission(Integer userId) {
+        if(userId!=999)
+            return null;
+        return new String[]{"add_vote"};
+    }
+
 }

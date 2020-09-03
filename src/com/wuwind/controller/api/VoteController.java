@@ -53,14 +53,13 @@ public class VoteController {
         vote.setItems(JSON.toJSONString(data));
         vote.setTitle(title);
         vote.setType(type);
+        vote.setCreateTime(new Date().getTime());
         return voteService.add(vote);
     }
 
     @RequestMapping("addVote")
     @ResponseBody
     public Vote addVote(HttpServletRequest request, Vote vote) {
-//        System.out.println("vote " + vote.getW1());
-//        System.out.println("getParameter " + request.getParameter("w1"));
         String countStr = "";
         int len = vote.getItems().split(",").length;
         for (int i = 0; i < len; i++) {
