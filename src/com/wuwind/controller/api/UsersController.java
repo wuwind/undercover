@@ -3,14 +3,12 @@ package com.wuwind.controller.api;
 import com.alibaba.fastjson.JSONObject;
 import com.wuwind.controller.bean.GameUser;
 import com.wuwind.dao.bean.Game;
+import com.wuwind.dao.bean.Properties;
 import com.wuwind.dao.bean.Room;
 import com.wuwind.dao.bean.User;
 import com.wuwind.dao.bean.Word;
 import com.wuwind.response.Response;
-import com.wuwind.service.GameService;
-import com.wuwind.service.RoomService;
-import com.wuwind.service.UserService;
-import com.wuwind.service.WordService;
+import com.wuwind.service.*;
 import com.wuwind.util.StrConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +37,8 @@ public class UsersController {
     WordService wordService;
     @Autowired
     RoomService roomService;
+    @Autowired
+    PropertiesService propertiesService;
 
     @RequestMapping("users")
     @ResponseBody
@@ -326,12 +326,10 @@ public class UsersController {
 
     @RequestMapping("getProperties")
     @ResponseBody
-    public Map<String, String> getProperties(Integer userId) {
-        Map<String, String> map = new HashMap<>();
-        map.put("word", "");
-        map.put("selectWord", "选词");
-        map.put("showCount", "0");
-        return map;
+    public Properties getProperties(Integer userId) {
+        Properties select = propertiesService.select(1);
+        return select;
     }
+
 
 }

@@ -28,9 +28,8 @@
             </list>
         </property>
     </bean>
-    <!--    <mvc:resources location="/WEB-INF/page/css/" mapping="/css/**" />-->
-    <!--    <mvc:resources location="/WEB-INF/page/js/" mapping="/js/**" />-->
-
+    <mvc:resources location="/WEB-INF/page/css/" mapping="/css/**"/>
+    <mvc:resources location="/WEB-INF/page/js/" mapping="/js/**"/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/page/"/>
         <property name="suffix" value=".jsp"/>
@@ -83,11 +82,6 @@
     <mvc:default-servlet-handler/>
     <!--<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>-->
 
-    <!--<mvc:resources mapping="/js/" location="/js/**"/>-->
-    <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-    <!--        <property name="maxUploadSize" value="5000"/>-->
-    <!--    </bean>-->
-
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
@@ -96,4 +90,12 @@
         </property>
     </bean>
 
+    <!-- 上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <!-- 最大内存大小 -->
+        <property name="maxInMemorySize" value="10240"/>
+        <!-- 最大文件大小，-1为不限制大小 -->
+        <property name="maxUploadSize" value="-1"/>
+    </bean>
 </beans>
