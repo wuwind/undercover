@@ -2,6 +2,7 @@ package com.wuwind.controller.bean.response;
 
 import com.alibaba.fastjson.JSON;
 import com.wuwind.controller.bean.VoteBean;
+import com.wuwind.dao.bean.Properties;
 import com.wuwind.dao.bean.Vote;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public class VoteResponse {
     private String title;
 
     private List<VoteBean> votes;
+
+    private Properties properties;
 
     public Long getId() {
         return id;
@@ -41,6 +44,14 @@ public class VoteResponse {
         id = vote.getId();
         title = vote.getTitle();
         votes = JSON.parseArray(vote.getItems(), VoteBean.class);
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
     }
 
     public VoteResponse(){}

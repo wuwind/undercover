@@ -2,6 +2,7 @@ package com.wuwind.dao.bean;
 
 public class Vote {
     private Long id;
+    private Integer userId;
     private String title;
     /**
      * 逗号隔开
@@ -16,6 +17,10 @@ public class Vote {
      * 1 多选
      */
     private Integer type;
+    /**
+     * 参数类型
+     */
+    private Integer properties;
 
     private Long createTime;
 
@@ -43,6 +48,14 @@ public class Vote {
         this.id = id;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -65,6 +78,14 @@ public class Vote {
 
     public void setCounts(String counts) {
         this.counts = counts;
+    }
+
+    public Integer getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Integer properties) {
+        this.properties = properties;
     }
 
     @Override

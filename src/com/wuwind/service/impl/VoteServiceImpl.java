@@ -35,6 +35,11 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
+    public List<Vote> selectByUserId(Object userId) {
+        return voteDao.selectByUserId(userId);
+    }
+
+    @Override
     public List<Vote> getAll() {
         return voteDao.getAll();
     }

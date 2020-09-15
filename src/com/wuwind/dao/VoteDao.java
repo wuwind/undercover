@@ -7,4 +7,6 @@ import java.util.List;
 public interface VoteDao extends BaseDao<Vote> {
 
     List<Vote> getVisibleAll();
+
+    List<Vote> selectByUserId(Object userId);
 }

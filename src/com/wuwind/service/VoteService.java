@@ -14,7 +14,10 @@ public interface VoteService {
 
     Vote select(Object voteId);
 
+    List<Vote> selectByUserId(Object userId);
+
     List<Vote> getAll();
+
     List<Vote> getVisibleAll();
 
     boolean isExist(Vote vote);

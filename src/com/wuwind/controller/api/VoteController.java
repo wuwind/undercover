@@ -3,15 +3,18 @@ package com.wuwind.controller.api;
 import com.alibaba.fastjson.JSON;
 import com.wuwind.controller.bean.VoteBean;
 import com.wuwind.controller.bean.response.VoteResponse;
+import com.wuwind.dao.bean.Properties;
 import com.wuwind.dao.bean.User;
 import com.wuwind.dao.bean.Vote;
 import com.wuwind.dao.bean.VoteForm;
 import com.wuwind.response.Response;
+import com.wuwind.service.PropertiesService;
 import com.wuwind.service.UserService;
 import com.wuwind.service.VoteFormService;
 import com.wuwind.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,15 +37,31 @@ public class VoteController {
     VoteFormService voteFormService;
     @Autowired
     UserService userService;
+    @Autowired
+    PropertiesService propertiesService;
 
 
     @RequestMapping("addVoteItems")
     @ResponseBody
-    public Object addVoteItems(HttpServletRequest request,String title, String[] items, Integer type) {
+    public Object addVoteItems(HttpServletRequest request, String title, String[] items, Integer type, Integer userId) {
         System.out.println("title " + title);
         System.out.println("items " + Arrays.toString(items));
-        if(null == items || items.length<=0)
-            return null;
+        Response response = new Response();
+        if (null == userId) {
+            response.setCode(0);
+            response.setMsg("你没有权限添加");
+            return response;
+        }
+        if (StringUtils.isEmpty(title)) {
+            response.setCode(0);
+            response.setMsg("添加内容");
+            return response;
+        }
+        if (null == items || items.length <= 0 || StringUtils.isEmpty(items[0])) {
+            response.setCode(0);
+            response.setMsg("添加选项");
+            return response;
+        }
         List<VoteBean> data = new ArrayList<>();
         for (String item : items) {
             VoteBean bean = new VoteBean();
@@ -54,7 +73,11 @@ public class VoteController {
         vote.setTitle(title);
         vote.setType(type);
         vote.setCreateTime(new Date().getTime());
-        return voteService.add(vote);
+        vote.setUserId(userId);
+        response.setMsg("添加成功");
+        response.setCode(1);
+        response.setData(voteService.add(vote));
+        return response;
     }
 
     @RequestMapping("addVote")
@@ -78,8 +101,13 @@ public class VoteController {
 
     @RequestMapping("getAllVotes")
     @ResponseBody
-    public List<Vote> getAllVotes(HttpServletRequest request) {
-        return voteService.getAll();
+    public List<Vote> getAllVotes(HttpServletRequest request, Integer userId) {
+        if(null == userId)
+            userId = 0;
+        if (userId == 999) {
+            return voteService.getAll();
+        }
+        return voteService.selectByUserId(userId);
     }
 
     @RequestMapping("getVoteById")
@@ -97,6 +125,11 @@ public class VoteController {
             VoteBean voteBean = voteResponse.getVotes().get(voteForm.getIdx());
             voteBean.setCount(voteBean.getCount() + 1);
         }
+        Properties select = propertiesService.select(vote.getProperties());
+        if (null == select) {
+            select = propertiesService.select(1);
+        }
+        voteResponse.setProperties(select);
         return voteResponse;
     }
 
