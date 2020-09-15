@@ -2,11 +2,8 @@ package com.wuwind.controller.api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wuwind.controller.bean.GameUser;
-import com.wuwind.dao.bean.Game;
 import com.wuwind.dao.bean.Properties;
-import com.wuwind.dao.bean.Room;
-import com.wuwind.dao.bean.User;
-import com.wuwind.dao.bean.Word;
+import com.wuwind.dao.bean.*;
 import com.wuwind.response.Response;
 import com.wuwind.service.*;
 import com.wuwind.util.StrConverter;
@@ -81,8 +78,8 @@ public class UsersController {
         u.setuOut(0);
         u.setRoomId((long) gUser.getRoomId());
         u.setCreateTime(simpleDate.format(new Date()));
-        Object id =  userService.addWxUser(u);
-        if(null == id) {
+        Object id = userService.addWxUser(u);
+        if (null == id) {
             response.setMsg("insert error");
             return response;
         }
@@ -331,5 +328,12 @@ public class UsersController {
         return select;
     }
 
+    @RequestMapping("getAllProperties")
+    @ResponseBody
+    public List<Properties> getAllProperties(Integer userId) {
+        if (null != userId && userId == 999)
+            return propertiesService.getAll();
+        return null;
+    }
 
 }

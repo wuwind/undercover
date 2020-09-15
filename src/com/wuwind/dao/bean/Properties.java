@@ -4,6 +4,7 @@ public class Properties {
     private Integer id;
     private Integer type;
     private String value;
+    private String des;
 
     public Integer getId() {
         return id;
@@ -11,6 +12,14 @@ public class Properties {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
     }
 
     public Integer getType() {

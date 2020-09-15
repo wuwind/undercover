@@ -43,7 +43,7 @@ public class VoteController {
 
     @RequestMapping("addVoteItems")
     @ResponseBody
-    public Object addVoteItems(HttpServletRequest request, String title, String[] items, Integer type, Integer userId) {
+    public Object addVoteItems(HttpServletRequest request, String title, String[] items, Integer type, Integer userId,Integer properties) {
         System.out.println("title " + title);
         System.out.println("items " + Arrays.toString(items));
         Response response = new Response();
@@ -72,6 +72,7 @@ public class VoteController {
         vote.setItems(JSON.toJSONString(data));
         vote.setTitle(title);
         vote.setType(type);
+        vote.setProperties(properties);
         vote.setCreateTime(new Date().getTime());
         vote.setUserId(userId);
         response.setMsg("添加成功");
